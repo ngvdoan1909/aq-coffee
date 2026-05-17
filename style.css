@@ -508,9 +508,20 @@ textarea {
     padding-top: 0;
 }
 
+.contact-container {
+    align-items: stretch;
+}
+
 .contact-info,
 .contact-form {
     min-width: 0;
+    height: 100%;
+}
+
+.contact-info,
+.contact-form form {
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-info p {
@@ -521,6 +532,24 @@ textarea {
 .contact-info a {
     color: var(--brown);
     font-weight: 600;
+}
+
+.contact-map {
+    width: 100%;
+    margin-top: 1.5rem;
+    flex: 1;
+    min-height: 280px;
+    overflow: hidden;
+    border: 1px solid rgba(92, 64, 51, 0.12);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+}
+
+.contact-map iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
 }
 
 .contact-form input,
@@ -536,6 +565,15 @@ textarea {
     outline: 0;
     resize: vertical;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.contact-form form {
+    height: 100%;
+}
+
+.contact-form textarea {
+    flex: 1;
+    min-height: 180px;
 }
 
 .contact-form input:hover,
