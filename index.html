@@ -126,6 +126,7 @@
         <div class="nav-links">
           <a href="#menu">Thực Đơn</a>
           <a href="#about">Giới Thiệu</a>
+          <a href="#reviews">Đánh Giá</a>
           <a href="#contact">Liên Hệ</a>
         </div>
       </div>
@@ -217,6 +218,39 @@
             src="https://picsum.photos/id/1015/800/600"
             alt="Không gian AQ Coffee"
           />
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-header">
+        <h2 id="reviews-title">Khách Hàng Nói Gì Về AQ</h2>
+        <p>Những đánh giá thật từ các anh chị ghé quầy mỗi buổi sáng</p>
+      </div>
+
+      <div class="reviews-shell">
+        <div class="reviews-viewport" aria-live="polite">
+          <div class="reviews-track" id="reviewsTrack"></div>
+        </div>
+
+        <div class="reviews-controls" aria-label="Điều khiển slide đánh giá">
+          <button
+            class="review-nav"
+            type="button"
+            data-review-prev
+            aria-label="Đánh giá trước"
+          >
+            &#8249;
+          </button>
+          <div class="review-dots" id="reviewDots"></div>
+          <button
+            class="review-nav"
+            type="button"
+            data-review-next
+            aria-label="Đánh giá tiếp theo"
+          >
+            &#8250;
+          </button>
         </div>
       </div>
     </section>
