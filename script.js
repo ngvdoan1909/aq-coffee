@@ -30,6 +30,13 @@ document.querySelectorAll('.menu-card, .about-container, .contact-container').fo
     }
 });
 
+document.querySelectorAll('[data-scroll-target]').forEach(button => {
+    button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.scrollTarget);
+        target?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+});
+
 const reviews = [
     {
         name: "Anh Tuấn",
@@ -112,6 +119,31 @@ function renderReviews() {
         </article>
     `).join('');
 }
+
+const contactForm = document.getElementById('contactForm');
+const formStatus = contactForm?.querySelector('.form-status');
+
+contactForm?.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const name = String(formData.get('name') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
+    const location = String(formData.get('location') || '').trim();
+
+    if (!name || !phone || !location) {
+        if (formStatus) {
+            formStatus.textContent = 'Bạn điền giúp AQ đủ thông tin để chuẩn bị đơn nhanh hơn nhé.';
+        }
+        return;
+    }
+
+    if (formStatus) {
+        formStatus.textContent = 'AQ đã nhận thông tin. Bạn có thể gọi 0868 691 616 để được chuẩn bị nhanh hơn.';
+    }
+
+    contactForm.reset();
+});
 
 if (reviewsShell) {
     reviewsShell.classList.add('reveal');

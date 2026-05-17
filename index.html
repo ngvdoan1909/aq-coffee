@@ -21,7 +21,7 @@
     <meta name="author" content="AQ Coffee" />
 
     <link rel="canonical" href="https://aq-coffee.vercel.app/" />
-    <link rel="preload" as="image" href="assets/images/seo/og_image.jpg" />
+    <link rel="preload" as="image" href="assets/images/coffee/hero-coffee.jpg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -103,7 +103,7 @@
         "@context": "https://schema.org",
         "@type": "CafeOrCoffeeShop",
         "name": "AQ Coffee",
-        "image": "https://aq-coffee.vercel.app/images/seo/og_image.jpg",
+        "image": "https://aq-coffee.vercel.app/assets/images/seo/og_image.jpg",
         "telephone": "0868691616",
         "address": {
           "@type": "PostalAddress",
@@ -111,9 +111,16 @@
           "addressRegion": "Hà Nội",
           "streetAddress": "Cổng A KCN Bắc Thăng Long"
         },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 21.138,
+          "longitude": 105.778
+        },
+        "openingHours": "Mo-Sa 05:00-08:00",
         "servesCuisine": "Coffee",
-        "priceRange": "15.000đ - 30.000đ",
-        "url": "https://aq-coffee.vercel.app/"
+        "priceRange": "15.000đ - 20.000đ",
+        "url": "https://aq-coffee.vercel.app/",
+        "sameAs": ["https://www.facebook.com/tran.quan.705128"]
       }
     </script>
 
@@ -144,14 +151,7 @@
         </p>
 
         <div class="hero-buttons">
-          <button
-            onclick="
-              document
-                .getElementById('menu')
-                .scrollIntoView({ behavior: 'smooth' })
-            "
-            class="btn-primary"
-          >
+          <button class="btn-primary" type="button" data-scroll-target="menu">
             Khám Phá Thực Đơn
           </button>
         </div>
@@ -162,6 +162,10 @@
           src="assets/images/coffee/hero-coffee.jpg"
           alt="AQ Coffee"
           class="hero-cup"
+          width="700"
+          height="800"
+          fetchpriority="high"
+          decoding="async"
         />
       </div>
     </section>
@@ -174,28 +178,28 @@
 
       <div class="menu-grid">
         <div class="menu-card">
-          <img src="assets/images/coffee/menu-ca-phe-den.jpg" alt="Cà phê đen" />
+          <img src="assets/images/coffee/menu-ca-phe-den.jpg" alt="Cà phê đen" width="900" height="675" loading="lazy" decoding="async" />
           <div class="menu-info">
             <h3>Cà Phê Đen</h3>
             <span class="price">15.000đ</span>
           </div>
         </div>
         <div class="menu-card">
-          <img src="assets/images/coffee/menu-ca-phe-sua.jpg" alt="Cà phê sữa" />
+          <img src="assets/images/coffee/menu-ca-phe-sua.jpg" alt="Cà phê sữa" width="900" height="675" loading="lazy" decoding="async" />
           <div class="menu-info">
             <h3>Cà Phê Sữa</h3>
             <span class="price">15.000đ</span>
           </div>
         </div>
         <div class="menu-card">
-          <img src="assets/images/coffee/menu-ca-phe-muoi.jpg" alt="Cà phê muối" />
+          <img src="assets/images/coffee/menu-ca-phe-muoi.jpg" alt="Cà phê muối" width="900" height="675" loading="lazy" decoding="async" />
           <div class="menu-info">
             <h3>Cà Phê Muối</h3>
             <span class="price">20.000đ</span>
           </div>
         </div>
         <div class="menu-card">
-          <img src="assets/images/coffee/menu-bac-xiu.jpg" alt="Bạc xỉu" />
+          <img src="assets/images/coffee/menu-bac-xiu.jpg" alt="Bạc xỉu" width="900" height="675" loading="lazy" decoding="async" />
           <div class="menu-info">
             <h3>Bạc Xỉu</h3>
             <span class="price">20.000đ</span>
@@ -219,6 +223,10 @@
           <img
             src="assets/images/coffee/about-coffee-counter.jpg"
             alt="Không gian AQ Coffee"
+            width="1200"
+            height="900"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
@@ -264,16 +272,18 @@
 
         <div class="contact-form">
           <h3>AQ Coffee Luôn Sẵn Sàng Phục Vụ Bạn</h3>
-          <form>
-            <input type="text" placeholder="Họ và tên" required />
-            <input type="tel" placeholder="Số điện thoại" required />
-            <input type="text" placeholder="Vị trí" required />
+          <form id="contactForm">
+            <input type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+            <input type="tel" name="phone" placeholder="Số điện thoại" autocomplete="tel" required />
+            <input type="text" name="location" placeholder="Vị trí" autocomplete="street-address" required />
             <textarea
+              name="message"
               placeholder="Nội dung tin nhắn..."
               rows="5"
               required
             ></textarea>
             <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
