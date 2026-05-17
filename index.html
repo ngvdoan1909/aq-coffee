@@ -1,122 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQ Coffee - Hanoi</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AQ Coffee - Cà Phê Đậm Vị</title>
+    <meta
+      name="description"
+      content="Thưởng thức cà phê đậm đà mỗi sáng tại AQ Coffee - Cổng A KCN Bắc Thăng Long, Hà Nội. Không gian ấm áp, thực đơn đa dạng: cà phê muối, bạc xỉu giá chỉ từ 20k."
+    />
+    <meta
+      name="keywords"
+      content="AQ Coffee, AQ Coffee Hanoi, cà phê Bắc Thăng Long, cà phê muối Hà Nội, bạc xỉu, quán cà phê ngon Đông Anh, cà phê cổng A Bắc Thăng Long"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="AQ Coffee" />
+    <link rel="canonical" href="https://aq-coffee.vercel.app/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://aq-coffee.vercel.app/" />
+    <meta
+      property="og:title"
+      content="AQ Coffee - Cà Phê Đậm Vị Tại KCN Bắc Thăng Long, Hà Nội"
+    />
+    <meta
+      property="og:description"
+      content="Thưởng thức cà phê đậm đà mỗi sáng tại AQ Coffee - Cổng A KCN Bắc Thăng Long, Hà Nội. Thực đơn đa dạng: cà phê muối, bạc xỉu giá chỉ từ 20k."
+    />
+    <meta property="og:image" content="https://picsum.photos/id/292/700/800" />
+    <meta
+      property="og:image:alt"
+      content="AQ Coffee - Thưởng Thức Cà Phê Trọn Vị"
+    />
+    <meta property="og:locale" content="vi_VN" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://aq-coffee.vercel.app/" />
+    <meta
+      property="twitter:title"
+      content="AQ Coffee - Cà Phê Đậm Vị Tại KCN Bắc Thăng Long, Hà Nội"
+    />
+    <meta
+      property="twitter:description"
+      content="Thưởng thức cà phê đậm đà mỗi sáng tại AQ Coffee - Cổng A KCN Bắc Thăng Long, Hà Nội. Thực đơn đa dạng: cà phê muối, bạc xỉu giá chỉ từ 20k."
+    />
+    <meta
+      property="twitter:image"
+      content="https://picsum.photos/id/292/700/800"
+    />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <a class="logo" href="#" aria-label="Về đầu trang">AQ COFFEE</a>
-            <div class="nav-links">
-                <a href="#menu">Thực Đơn</a>
-                <a href="#about">Giới Thiệu</a>
-                <a href="#contact">Liên Hệ</a>
-            </div>
+      <div class="nav-container">
+        <a class="logo" href="#" aria-label="Về đầu trang">AQ COFFEE</a>
+        <div class="nav-links">
+          <a href="#menu">Thực Đơn</a>
+          <a href="#about">Giới Thiệu</a>
+          <a href="#contact">Liên Hệ</a>
         </div>
+      </div>
     </nav>
 
     <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Thưởng Thức Cà Phê<br>Trọn Vị Cùng AQ</h1>
-            <p class="hero-subtitle">AQ Coffee mang đến những ly cà phê đậm đà, được pha chế tỉ mỉ mỗi sáng trong không gian gần gũi và ấm áp tại Hà Nội.</p>
+      <div class="hero-content">
+        <h1 class="hero-title">Thưởng Thức Cà Phê<br />Trọn Vị Cùng AQ</h1>
+        <p class="hero-subtitle">
+          AQ Coffee mang đến những ly cà phê đậm đà, được pha chế tỉ mỉ mỗi sáng
+          trong không gian gần gũi và ấm áp tại Hà Nội.
+        </p>
 
-            <div class="hero-buttons">
-                <button onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })" class="btn-primary">Khám Phá Thực Đơn</button>
-            </div>
+        <div class="hero-buttons">
+          <button
+            onclick="
+              document
+                .getElementById('menu')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+            class="btn-primary"
+          >
+            Khám Phá Thực Đơn
+          </button>
         </div>
+      </div>
 
-        <div class="hero-image-container">
-            <img src="https://picsum.photos/id/292/700/800" alt="AQ Coffee" class="hero-cup">
-        </div>
+      <div class="hero-image-container">
+        <img
+          src="https://picsum.photos/id/292/700/800"
+          alt="AQ Coffee"
+          class="hero-cup"
+        />
+      </div>
     </section>
 
     <section class="menu" id="menu">
-        <div class="section-header">
-            <h2>Thực Đơn Đặc Sắc</h2>
-            <p>Những ly cà phê được yêu thích nhất</p>
-        </div>
+      <div class="section-header">
+        <h2>Thực Đơn Đặc Sắc</h2>
+        <p>Những ly cà phê được yêu thích nhất</p>
+      </div>
 
-        <div class="menu-grid">
-            <div class="menu-card">
-                <img src="https://picsum.photos/id/201/400/300" alt="Cà phê đen">
-                <div class="menu-info">
-                    <h3>Cà Phê Đen</h3>
-                    <span class="price">15.000đ</span>
-                </div>
-            </div>
-            <div class="menu-card">
-                <img src="https://picsum.photos/id/292/400/300" alt="Cà phê sữa">
-                <div class="menu-info">
-                    <h3>Cà Phê Sữa</h3>
-                    <span class="price">15.000đ</span>
-                </div>
-            </div>
-            <div class="menu-card">
-                <img src="https://picsum.photos/id/431/400/300" alt="Cà phê muối">
-                <div class="menu-info">
-                    <h3>Cà Phê Muối</h3>
-                    <span class="price">20.000đ</span>
-                </div>
-            </div>
-            <div class="menu-card">
-                <img src="https://picsum.photos/id/870/400/300" alt="Bạc xỉu">
-                <div class="menu-info">
-                    <h3>Bạc Xỉu</h3>
-                    <span class="price">20.000đ</span>
-                </div>
-            </div>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <img src="https://picsum.photos/id/201/400/300" alt="Cà phê đen" />
+          <div class="menu-info">
+            <h3>Cà Phê Đen</h3>
+            <span class="price">15.000đ</span>
+          </div>
         </div>
+        <div class="menu-card">
+          <img src="https://picsum.photos/id/292/400/300" alt="Cà phê sữa" />
+          <div class="menu-info">
+            <h3>Cà Phê Sữa</h3>
+            <span class="price">15.000đ</span>
+          </div>
+        </div>
+        <div class="menu-card">
+          <img src="https://picsum.photos/id/431/400/300" alt="Cà phê muối" />
+          <div class="menu-info">
+            <h3>Cà Phê Muối</h3>
+            <span class="price">20.000đ</span>
+          </div>
+        </div>
+        <div class="menu-card">
+          <img src="https://picsum.photos/id/870/400/300" alt="Bạc xỉu" />
+          <div class="menu-info">
+            <h3>Bạc Xỉu</h3>
+            <span class="price">20.000đ</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="about" id="about">
-        <div class="about-container">
-            <div class="about-text">
-                <h2>Giới Thiệu AQ Coffee</h2>
-                <p>AQ Coffee mang đến những tách cà phê chất lượng cao được pha chế thủ công trong không gian tối giản và ấm áp. Chúng tôi tin rằng một ly cà phê tốt không chỉ là thức uống, mà còn là khoảnh khắc đáng trân trọng mỗi ngày.</p>
-            </div>
-            <div class="about-image">
-                <img src="https://picsum.photos/id/1015/800/600" alt="Không gian AQ Coffee">
-            </div>
+      <div class="about-container">
+        <div class="about-text">
+          <h2>Giới Thiệu AQ Coffee</h2>
+          <p>
+            AQ Coffee mang đến những tách cà phê chất lượng cao được pha chế thủ
+            công trong không gian tối giản và ấm áp. Chúng tôi tin rằng một ly
+            cà phê tốt không chỉ là thức uống, mà còn là khoảnh khắc đáng trân
+            trọng mỗi ngày.
+          </p>
         </div>
+        <div class="about-image">
+          <img
+            src="https://picsum.photos/id/1015/800/600"
+            alt="Không gian AQ Coffee"
+          />
+        </div>
+      </div>
     </section>
 
     <section class="contact" id="contact">
-        <div class="section-header">
-            <h2>Liên Hệ Với Chúng Tôi</h2>
-            <p>Ghé AQ Coffee để bắt đầu ngày mới bằng một ly cà phê thơm ngon, hoặc gửi thông tin để chúng tôi hỗ trợ bạn nhanh nhất.</p>
+      <div class="section-header">
+        <h2>Liên Hệ Với Chúng Tôi</h2>
+        <p>
+          Ghé AQ Coffee để bắt đầu ngày mới bằng một ly cà phê thơm ngon, hoặc
+          gửi thông tin để chúng tôi hỗ trợ bạn nhanh nhất.
+        </p>
+      </div>
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Thông Tin Liên Hệ</h3>
+          <p><strong>Địa chỉ:</strong> Cổng A, KCN Bắc Thăng Long</p>
+          <p><strong>Hotline:</strong> 0868 691 616</p>
+          <p>
+            <strong>Facebook:</strong>
+            <a
+              href="https://www.facebook.com/tran.quan.705128"
+              target="_blank"
+              rel="noreferrer"
+              >Trần Quân</a
+            >
+          </p>
+          <p><strong>Giờ bán:</strong> 05:00 - 08:00 (T2 - T7)</p>
         </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Thông Tin Liên Hệ</h3>
-                <p><strong>Địa chỉ:</strong> Cổng A, KCN Bắc Thăng Long</p>
-                <p><strong>Hotline:</strong> 0868 691 616</p>
-                <p><strong>Facebook:</strong> <a href="https://www.facebook.com/tran.quan.705128" target="_blank" rel="noreferrer">Trần Quân</a></p>
-                <p><strong>Giờ bán:</strong> 05:00 - 08:00 (T2 - T7)</p>
-            </div>
 
-            <div class="contact-form">
-                <h3>AQ Coffee Luôn Sẵn Sàng Phục Vụ Bạn</h3>
-                <form>
-                    <input type="text" placeholder="Họ và tên" required>
-                    <input type="tel" placeholder="Số điện thoại" required>
-                    <input type="text" placeholder="Vị trí" required>
-                    <textarea placeholder="Nội dung tin nhắn..." rows="5" required></textarea>
-                    <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
-                </form>
-            </div>
+        <div class="contact-form">
+          <h3>AQ Coffee Luôn Sẵn Sàng Phục Vụ Bạn</h3>
+          <form>
+            <input type="text" placeholder="Họ và tên" required />
+            <input type="tel" placeholder="Số điện thoại" required />
+            <input type="text" placeholder="Vị trí" required />
+            <textarea
+              placeholder="Nội dung tin nhắn..."
+              rows="5"
+              required
+            ></textarea>
+            <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
+          </form>
         </div>
+      </div>
     </section>
 
     <footer class="footer">
-        <div class="footer-container">
-            <p>&copy; 2026 AQ Coffee. Tất cả quyền được bảo lưu.</p>
-        </div>
+      <div class="footer-container">
+        <p>&copy; 2026 AQ Coffee. Tất cả quyền được bảo lưu.</p>
+      </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
