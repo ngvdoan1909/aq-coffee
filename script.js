@@ -81,8 +81,14 @@ const reviewDots = document.getElementById('reviewDots');
 const prevReviewButton = document.querySelector('[data-review-prev]');
 const nextReviewButton = document.querySelector('[data-review-next]');
 const reviewsShell = document.querySelector('.reviews-shell');
+const reviewsViewport = document.querySelector('.reviews-viewport');
 let reviewIndex = 0;
 let reviewTimer;
+let isReviewDragging = false;
+let reviewDragStartX = 0;
+let reviewDragDeltaX = 0;
+let reviewBaseTranslate = 0;
+let activeReviewPointerId = null;
 
 function getVisibleReviews() {
     if (window.innerWidth <= 640) return 1;
@@ -133,14 +139,19 @@ function updateReviewSlider() {
     if (!reviewsTrack) return;
 
     reviewIndex = Math.min(reviewIndex, getMaxReviewIndex());
-    const firstCard = reviewsTrack.querySelector('.review-card');
-    const gap = parseFloat(getComputedStyle(reviewsTrack).columnGap) || 0;
-    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 0;
-    reviewsTrack.style.transform = `translateX(-${reviewIndex * (cardWidth + gap)}px)`;
+    reviewBaseTranslate = -reviewIndex * getReviewStepWidth();
+    reviewsTrack.style.transform = `translateX(${reviewBaseTranslate}px)`;
 
     reviewDots?.querySelectorAll('.review-dot').forEach((dot, index) => {
         dot.classList.toggle('is-active', index === reviewIndex);
     });
+}
+
+function getReviewStepWidth() {
+    const firstCard = reviewsTrack?.querySelector('.review-card');
+    const gap = reviewsTrack ? parseFloat(getComputedStyle(reviewsTrack).columnGap) || 0 : 0;
+    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 0;
+    return cardWidth + gap;
 }
 
 function moveReview(direction) {
@@ -168,6 +179,60 @@ nextReviewButton?.addEventListener('click', () => {
 
 reviewsShell?.addEventListener('mouseenter', () => window.clearInterval(reviewTimer));
 reviewsShell?.addEventListener('mouseleave', restartReviewTimer);
+
+reviewsViewport?.addEventListener('pointerdown', event => {
+    if (!reviewsTrack) return;
+
+    isReviewDragging = true;
+    activeReviewPointerId = event.pointerId;
+    reviewDragStartX = event.clientX;
+    reviewDragDeltaX = 0;
+    reviewBaseTranslate = -reviewIndex * getReviewStepWidth();
+    reviewsViewport.setPointerCapture(event.pointerId);
+    reviewsViewport.classList.add('is-dragging');
+    reviewsTrack.classList.add('is-dragging');
+    window.clearInterval(reviewTimer);
+});
+
+reviewsViewport?.addEventListener('pointermove', event => {
+    if (!isReviewDragging || event.pointerId !== activeReviewPointerId || !reviewsTrack) return;
+
+    reviewDragDeltaX = event.clientX - reviewDragStartX;
+    reviewsTrack.style.transform = `translateX(${reviewBaseTranslate + reviewDragDeltaX}px)`;
+});
+
+function endReviewDrag(event) {
+    if (!isReviewDragging || event.pointerId !== activeReviewPointerId) return;
+
+    const stepWidth = getReviewStepWidth();
+    const dragThreshold = Math.min(120, stepWidth * 0.22);
+
+    reviewsViewport?.classList.remove('is-dragging');
+    reviewsTrack?.classList.remove('is-dragging');
+
+    if (Math.abs(reviewDragDeltaX) > dragThreshold) {
+        moveReview(reviewDragDeltaX < 0 ? 1 : -1);
+    } else {
+        updateReviewSlider();
+    }
+
+    if (reviewsViewport?.hasPointerCapture(event.pointerId)) {
+        reviewsViewport.releasePointerCapture(event.pointerId);
+    }
+
+    isReviewDragging = false;
+    activeReviewPointerId = null;
+    reviewDragDeltaX = 0;
+    restartReviewTimer();
+}
+
+reviewsViewport?.addEventListener('pointerup', endReviewDrag);
+reviewsViewport?.addEventListener('pointercancel', endReviewDrag);
+reviewsViewport?.addEventListener('lostpointercapture', event => {
+    if (isReviewDragging && event.pointerId === activeReviewPointerId) {
+        endReviewDrag(event);
+    }
+});
 
 window.addEventListener('resize', () => {
     renderReviewDots();

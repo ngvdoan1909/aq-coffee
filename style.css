@@ -259,6 +259,13 @@ textarea {
 .reviews-viewport {
     overflow: hidden;
     border-radius: 18px;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+}
+
+.reviews-viewport.is-dragging {
+    cursor: grabbing;
 }
 
 .reviews-track {
@@ -267,6 +274,10 @@ textarea {
     gap: var(--review-gap);
     transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
+}
+
+.reviews-track.is-dragging {
+    transition: none;
 }
 
 .review-card {
