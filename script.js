@@ -1,26 +1,33 @@
+const navbar = document.querySelector('.navbar');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
     if (window.scrollY > 50) {
         navbar.classList.add('is-scrolled');
     } else {
         navbar.classList.remove('is-scrolled');
     }
-});
+}, { passive: true });
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
         }
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
 
 document.querySelectorAll('.menu-card, .about-container, .contact-container').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(40px)';
-    el.style.transition = 'all 0.8s ease';
-    observer.observe(el);
+    el.classList.add('reveal');
+
+    if (prefersReducedMotion) {
+        el.classList.add('is-visible');
+    } else {
+        observer.observe(el);
+    }
 });
 
 const reviews = [
@@ -240,10 +247,13 @@ window.addEventListener('resize', () => {
 });
 
 if (reviewsShell) {
-    reviewsShell.style.opacity = '0';
-    reviewsShell.style.transform = 'translateY(40px)';
-    reviewsShell.style.transition = 'all 0.8s ease';
-    observer.observe(reviewsShell);
+    reviewsShell.classList.add('reveal');
+
+    if (prefersReducedMotion) {
+        reviewsShell.classList.add('is-visible');
+    } else {
+        observer.observe(reviewsShell);
+    }
 }
 
 renderReviews();
