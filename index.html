@@ -17,7 +17,7 @@
       content="AQ Coffee, cà phê Bắc Thăng Long, cà phê Đông Anh, cà phê mang đi Hà Nội, cà phê muối Hà Nội, bạc xỉu Bắc Thăng Long, quán cafe gần KCN Bắc Thăng Long, cafe sáng Đông Anh"
     />
 
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="AQ Coffee" />
 
     <link rel="canonical" href="https://aq-coffee.vercel.app/" />
@@ -48,6 +48,11 @@
       property="og:image"
       content="https://aq-coffee.vercel.app/assets/images/seo/og_image.jpg"
     />
+    <meta
+      property="og:image:secure_url"
+      content="https://aq-coffee.vercel.app/assets/images/seo/og_image.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
 
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -107,7 +112,8 @@
         "@context": "https://schema.org",
         "@type": "CafeOrCoffeeShop",
         "name": "AQ Coffee",
-        "image": "https://aq-coffee.vercel.app/assets/images/seo/og_image.jpg",
+        "image": "https://aq-coffee.vercel.app/assets/images/logo.png",
+        "logo": "https://aq-coffee.vercel.app/assets/images/logo.png",
         "telephone": "0868691616",
         "address": {
           "@type": "PostalAddress",
@@ -280,7 +286,11 @@
         <div class="reviews-viewport" aria-live="polite">
           <div class="reviews-track" id="reviewsTrack"></div>
         </div>
-        <div class="reviews-dots" id="reviewsDots" aria-label="Chọn đánh giá"></div>
+        <div
+          class="reviews-dots"
+          id="reviewsDots"
+          aria-label="Chọn đánh giá"
+        ></div>
       </div>
     </section>
 
