@@ -102,6 +102,8 @@ const reviews = [
 
 const reviewsTrack = document.getElementById('reviewsTrack');
 const reviewsShell = document.querySelector('.reviews-shell');
+const reviewsDots = document.getElementById('reviewsDots');
+const mobileReviewsQuery = window.matchMedia('(max-width: 640px)');
 
 function renderReviews() {
     if (!reviewsTrack) return;
@@ -118,6 +120,86 @@ function renderReviews() {
             </div>
         </article>
     `).join('');
+
+    if (reviewsDots) {
+        reviewsDots.innerHTML = reviews.map((_, index) => `
+            <button class="reviews-dot" type="button" aria-label="Xem đánh giá ${index + 1}" data-review-index="${index}"></button>
+        `).join('');
+    }
+}
+
+function setActiveReviewDot(index) {
+    if (!reviewsDots) return;
+
+    reviewsDots.querySelectorAll('.reviews-dot').forEach((dot, dotIndex) => {
+        const isActive = dotIndex === index;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+}
+
+function getActiveReviewIndex() {
+    if (!reviewsTrack) return 0;
+
+    const cards = [...reviewsTrack.querySelectorAll('.review-card')];
+    const trackCenter = reviewsTrack.scrollLeft + (reviewsTrack.clientWidth / 2);
+
+    return cards.reduce((closestIndex, card, index) => {
+        const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+        const closestCard = cards[closestIndex];
+        const closestCenter = closestCard.offsetLeft + (closestCard.offsetWidth / 2);
+
+        return Math.abs(cardCenter - trackCenter) < Math.abs(closestCenter - trackCenter)
+            ? index
+            : closestIndex;
+    }, 0);
+}
+
+function scrollToReview(index) {
+    if (!reviewsTrack) return;
+
+    const card = reviewsTrack.querySelectorAll('.review-card')[index];
+    if (!card) return;
+
+    const left = card.offsetLeft - ((reviewsTrack.clientWidth - card.offsetWidth) / 2);
+    reviewsTrack.scrollTo({ left, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+}
+
+function setupReviewsSlider() {
+    if (!reviewsTrack || !reviewsDots) return;
+
+    let ticking = false;
+
+    const syncActiveDot = () => {
+        ticking = false;
+        setActiveReviewDot(getActiveReviewIndex());
+    };
+
+    reviewsTrack.addEventListener('scroll', () => {
+        if (!mobileReviewsQuery.matches || ticking) return;
+
+        ticking = true;
+        window.requestAnimationFrame(syncActiveDot);
+    }, { passive: true });
+
+    reviewsDots.addEventListener('click', event => {
+        const dot = event.target.closest('.reviews-dot');
+        if (!dot) return;
+
+        scrollToReview(Number(dot.dataset.reviewIndex));
+    });
+
+    const handleModeChange = () => {
+        if (!mobileReviewsQuery.matches) {
+            reviewsTrack.scrollTo({ left: 0, behavior: 'auto' });
+        }
+
+        setActiveReviewDot(getActiveReviewIndex());
+    };
+
+    mobileReviewsQuery.addEventListener?.('change', handleModeChange);
+    window.addEventListener('resize', handleModeChange, { passive: true });
+    handleModeChange();
 }
 
 const contactForm = document.getElementById('contactForm');
@@ -156,3 +238,4 @@ if (reviewsShell) {
 }
 
 renderReviews();
+setupReviewsSlider();

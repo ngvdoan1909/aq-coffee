@@ -270,10 +270,11 @@ textarea {
 
 .menu-card {
     position: relative;
-    background: var(--cream);
-    border-radius: 16px;
+    background:
+        linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(255, 246, 235, 0.96));
+    border-radius: 18px;
     overflow: hidden;
-    border: 1px solid rgba(92, 64, 51, 0.08);
+    border: 1px solid rgba(92, 64, 51, 0.1);
     box-shadow: var(--shadow-soft);
     transition: transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out), border-color 0.3s ease;
     min-width: 0;
@@ -285,41 +286,56 @@ textarea {
     box-shadow: var(--shadow-lift);
 }
 
-.menu-card::before,
-.menu-card::after {
+.menu-image-frame {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.9) 0 18%, transparent 45%),
+        linear-gradient(145deg, #f4dfbf 0%, #e0b579 48%, #9f6749 100%);
+}
+
+.menu-image-frame::before {
     content: "";
     position: absolute;
-    top: -35%;
-    width: 18%;
-    height: 170%;
-    transform: translateX(-260%) rotate(22deg);
-    background: rgba(255, 255, 255, 0.45);
+    left: 11%;
+    right: 11%;
+    bottom: 7%;
+    height: 13%;
+    border-radius: 999px;
+    background: rgba(44, 33, 24, 0.28);
+    filter: blur(18px);
+    transform: translateY(12%);
+}
+
+.menu-image-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 28%),
+        linear-gradient(0deg, rgba(44, 33, 24, 0.12), transparent 34%);
     pointer-events: none;
-    z-index: 2;
-}
-
-.menu-card::after {
-    width: 9%;
-    background: rgba(255, 255, 255, 0.28);
-    transition-delay: 0.08s;
-}
-
-.menu-card:hover::before,
-.menu-card:hover::after {
-    animation: menuLightSweep 0.9s ease forwards;
 }
 
 .menu-card img {
+    position: relative;
+    z-index: 1;
+    display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    height: auto;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 20px 24px rgba(44, 33, 24, 0.18));
     transition: transform 0.75s var(--ease-out), filter 0.55s ease;
 }
 
 .menu-card:hover img {
-    transform: scale(1.055);
-    filter: saturate(1.06) contrast(1.03);
+    transform: scale(1.025);
+    filter: saturate(1.06) contrast(1.03) drop-shadow(0 20px 26px rgba(44, 33, 24, 0.2));
 }
 
 .menu-info {
@@ -416,6 +432,10 @@ textarea {
 
 .reviews-viewport {
     overflow: visible;
+}
+
+.reviews-dots {
+    display: none;
 }
 
 .reviews-track {
@@ -664,15 +684,6 @@ textarea {
     }
 }
 
-@keyframes menuLightSweep {
-    from {
-        transform: translateX(-260%) rotate(22deg);
-    }
-    to {
-        transform: translateX(760%) rotate(22deg);
-    }
-}
-
 @media (max-width: 1180px) {
     .menu-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -788,13 +799,80 @@ textarea {
     }
 
     .reviews-track {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        display: flex;
+        grid-template-columns: none;
+        gap: 0;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-behavior: smooth;
+        scroll-padding-inline: 5%;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        margin-left: -5%;
+        margin-right: -5%;
+        padding: 0 5% 0.35rem;
+        cursor: grab;
+        touch-action: pan-x pan-y;
+    }
+
+    .reviews-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .reviews-track:active {
+        cursor: grabbing;
     }
 
     .review-card {
+        flex: 0 0 86%;
         grid-column: span 1 !important;
-        min-height: 0;
+        min-height: 250px;
+        margin-right: 0.9rem;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        transform: translateZ(0);
+    }
+
+    .review-card:last-child {
+        margin-right: 0;
+    }
+
+    .review-card:hover {
+        transform: translateZ(0);
+    }
+
+    .review-card:nth-child(1) .review-text,
+    .review-card:nth-child(2) .review-text {
+        font-size: clamp(0.84rem, 3.6vw, 0.94rem);
+    }
+
+    .reviews-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding-top: 1.25rem;
+    }
+
+    .reviews-dot {
+        width: 0.48rem;
+        height: 0.48rem;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(92, 64, 51, 0.24);
+        cursor: pointer;
+        transition: width 0.28s var(--ease-out), background-color 0.28s ease, transform 0.28s var(--ease-out);
+    }
+
+    .reviews-dot.is-active {
+        width: 1.45rem;
+        background: var(--accent);
+    }
+
+    .reviews-dot:focus-visible {
+        outline: 2px solid var(--brown);
+        outline-offset: 4px;
     }
 }
 
@@ -813,10 +891,6 @@ textarea {
         animation: none;
     }
 
-    .menu-card:hover::before,
-    .menu-card:hover::after {
-        animation: none;
-    }
 }
 
 @media (max-width: 380px) {
