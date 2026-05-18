@@ -1,5 +1,10 @@
 const navbar = document.querySelector('.navbar');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const currentYear = document.getElementById('currentYear');
+
+if (currentYear) {
+    currentYear.textContent = String(new Date().getFullYear());
+}
 
 window.addEventListener('scroll', () => {
     if (!navbar) return;
@@ -34,6 +39,22 @@ document.querySelectorAll('[data-scroll-target]').forEach(button => {
     button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.scrollTarget);
         target?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', event => {
+        const hash = link.getAttribute('href');
+        if (!hash) return;
+
+        event.preventDefault();
+
+        if (hash === '#') {
+            window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            return;
+        }
+
+        document.querySelector(hash)?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
 });
 
