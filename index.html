@@ -298,6 +298,41 @@
           id="reviewsDots"
           aria-label="Chọn đánh giá"
         ></div>
+
+        <form class="review-form" id="reviewForm">
+          <h3>Gửi đánh giá của bạn</h3>
+          <div class="review-form-grid">
+            <input
+              type="text"
+              name="name"
+              placeholder="Tên của bạn"
+              autocomplete="name"
+              maxlength="40"
+              required
+            />
+            <div class="star-rating" aria-label="Số sao">
+              <input type="radio" id="review-star-5" name="stars" value="5" checked />
+              <label for="review-star-5" title="5 sao">★</label>
+              <input type="radio" id="review-star-4" name="stars" value="4" />
+              <label for="review-star-4" title="4 sao">★</label>
+              <input type="radio" id="review-star-3" name="stars" value="3" />
+              <label for="review-star-3" title="3 sao">★</label>
+              <input type="radio" id="review-star-2" name="stars" value="2" />
+              <label for="review-star-2" title="2 sao">★</label>
+              <input type="radio" id="review-star-1" name="stars" value="1" />
+              <label for="review-star-1" title="1 sao">★</label>
+            </div>
+          </div>
+          <textarea
+            name="text"
+            placeholder="Nội dung đánh giá..."
+            rows="4"
+            maxlength="260"
+            required
+          ></textarea>
+          <button type="submit" class="btn-primary">Gửi Đánh Giá</button>
+          <p class="review-form-status" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
 
@@ -381,6 +416,6 @@
       </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>

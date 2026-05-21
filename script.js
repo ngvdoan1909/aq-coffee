@@ -1,3 +1,26 @@
+import { initializeApp } from 'firebase/app';
+import {
+    getDatabase,
+    limitToLast,
+    onValue,
+    orderByChild,
+    push,
+    query,
+    ref,
+    serverTimestamp
+} from 'firebase/database';
+
+const firebaseConfig = {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+};
+
 const navbar = document.querySelector('.navbar');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const currentYear = document.getElementById('currentYear');
@@ -58,95 +81,60 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
 });
 
-const reviews = [
-    {
-        name: "Anh Tuấn",
-        phone: "0984.552.***",
-        stars: 5,
-        text: "Cà phê tự ủ uống đậm đà khác hẳn mấy loại pha máy đại trà bây giờ. Sáng nào đi làm qua Cổng A cũng phải tạt vào làm ly đen đá mới đủ đô để tỉnh táo vào ca."
-    },
-    {
-        name: "Chị Linh",
-        phone: "0356.221.***",
-        stars: 5,
-        text: "Mê nhất món cà phê muối ở đây, kem béo ngậy mà cốt cà phê pha tay rất thơm và đậm. Mình hay alo hotline đặt trước, lúc đi xe máy qua chỉ việc lấy luôn, không lo muộn giờ chấm công."
-    },
-    {
-        name: "Hùng",
-        phone: "0912.883.***",
-        stars: 4,
-        text: "Quầy nhỏ thôi nhưng anh chủ làm nhanh thoăn thoắt. Tầm 6h45 sáng đông nghẹt người xếp hàng mà chờ xíu là có liền. Bạc xỉu thơm, ngọt béo đúng gu mình."
-    },
-    {
-        name: "Thu Hương",
-        phone: "0868.334.***",
-        stars: 5,
-        text: "Cà phê chuẩn vị truyền thống, giá lại cực kỳ bình dân chỉ từ 15k-20k. Điểm cộng lớn là bán từ 5h sáng, hôm nào mình đi ca sớm vẫn kịp mua."
-    },
-    {
-        name: "Bạn Đức",
-        phone: "0333.666.***",
-        stars: 4,
-        text: "Cốt cà phê tự ủ rất chất lượng, uống từ sáng mà tỉnh táo đến tận chiều. Anh chủ nhiệt tình, vui vẻ, vote 5 sao cho sự tử tế!"
-    },
-    {
-        name: "Chú Bảo",
-        phone: "0973.415.***",
-        stars: 5,
-        text: "Tôi làm ca đêm mệt mỏi, sáng ra giao ca cứ phải làm ly đen không đường của chú em này mới tỉnh người để chạy xe về nhà. Cà phê nguyên chất, đắng thanh dầy vị, rất đáng tiền."
-    },
-    {
-        name: "C Minh Anh",
-        phone: "0961.992.***",
-        stars: 4,
-        text: "Tìm mãi quanh khu Bắc Thăng Long mới thấy một quầy bán bạc xỉu pha tay ngon như này. Sữa đặc thơm ngậy hòa với vị đắng nhẹ của cốt cà phê ủ. Nghiện luôn rồi tuần nào cũng mua 3-4 lần."
-    },
-    {
-        name: "Anh Ngọc",
-        phone: "0388.741.***",
-        stars: 5,
-        text: "Giá 15k-20k mà chất lượng quá ổn áp. Sáng nào cũng xếp hàng mua một ly cà phê sữa mang vào xưởng. Anh chủ tay chân lẹ làng, phục vụ chu đáo dù khách xếp hàng rất đông."
-    },
-    {
-        name: "Thảo Vy",
-        phone: "0345.118.***",
-        stars: 5,
-        text: "Món cà phê muối ngon đỉnh chóp nha mọi người, béo béo mặn mặn kết hợp cốt cà phê pha tay đậm đặc. Hôm nào dậy muộn alo trước cho anh chủ, lúc đi qua lấy vèo cái là xong không sợ trễ giờ."
-    },
-    {
-        name: "Anh Grab",
-        phone: "0904.663.***",
-        stars: 4,
-        text: "Chạy xe sáng sớm cứ ghé Cổng A làm ly đen đá. Tiện đường, mua nhanh gọn, không mất thời gian gửi xe gì cả. Cà phê tự ủ tay uống đậm đà chuẩn vị, giúp tôi tỉnh táo cả ngày chạy xe."
-    }
-];
-
 const reviewsTrack = document.getElementById('reviewsTrack');
 const reviewsShell = document.querySelector('.reviews-shell');
 const reviewsDots = document.getElementById('reviewsDots');
+const reviewForm = document.getElementById('reviewForm');
+const reviewFormStatus = reviewForm?.querySelector('.review-form-status');
 const mobileReviewsQuery = window.matchMedia('(max-width: 640px)');
+const hasFirebaseConfig = Boolean(firebaseConfig.apiKey && firebaseConfig.databaseURL && firebaseConfig.projectId);
+let customerReviews = [];
+let reviewsRef;
+
+function escapeHTML(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+function normalizeStars(value) {
+    const stars = Number(value);
+    if (!Number.isFinite(stars)) return 5;
+
+    return Math.min(5, Math.max(1, Math.round(stars)));
+}
 
 function renderReviews() {
     if (!reviewsTrack) return;
 
-    reviewsTrack.innerHTML = reviews.map(review => `
+    reviewsTrack.innerHTML = customerReviews.map(review => {
+        const stars = normalizeStars(review.stars);
+        const name = escapeHTML(review.name || 'Khách hàng AQ');
+        const text = escapeHTML(review.text || '');
+
+        return `
         <article class="review-card">
             <div>
-                <div class="review-stars" aria-label="${review.stars} sao">${'&#9733;'.repeat(review.stars)}${'&#9734;'.repeat(5 - review.stars)}</div>
-                <p class="review-text">“${review.text}”</p>
+                <div class="review-stars" aria-label="${stars} sao">${'&#9733;'.repeat(stars)}${'&#9734;'.repeat(5 - stars)}</div>
+                <p class="review-text">“${text}”</p>
             </div>
             <div class="review-person">
-                <strong>${review.name}</strong>
-                <span>${review.phone}</span>
+                <strong>${name}</strong>
             </div>
         </article>
-    `).join('');
+    `;
+    }).join('');
 
     if (reviewsDots) {
-        reviewsDots.innerHTML = reviews.map((_, index) => `
+        reviewsDots.innerHTML = customerReviews.map((_, index) => `
             <button class="reviews-dot" type="button" aria-label="Xem đánh giá ${index + 1}" data-review-index="${index}"></button>
         `).join('');
     }
+
+    setActiveReviewDot(getActiveReviewIndex());
 }
 
 function setActiveReviewDot(index) {
@@ -190,6 +178,10 @@ function setupReviewsSlider() {
     if (!reviewsTrack || !reviewsDots) return;
 
     let ticking = false;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartScrollLeft = 0;
+    let didDrag = false;
 
     const syncActiveDot = () => {
         ticking = false;
@@ -197,7 +189,7 @@ function setupReviewsSlider() {
     };
 
     reviewsTrack.addEventListener('scroll', () => {
-        if (!mobileReviewsQuery.matches || ticking) return;
+        if (ticking) return;
 
         ticking = true;
         window.requestAnimationFrame(syncActiveDot);
@@ -210,11 +202,43 @@ function setupReviewsSlider() {
         scrollToReview(Number(dot.dataset.reviewIndex));
     });
 
-    const handleModeChange = () => {
-        if (!mobileReviewsQuery.matches) {
-            reviewsTrack.scrollTo({ left: 0, behavior: 'auto' });
+    reviewsTrack.addEventListener('mousedown', event => {
+        if (event.button !== 0) return;
+
+        isDragging = true;
+        didDrag = false;
+        dragStartX = event.clientX;
+        dragStartScrollLeft = reviewsTrack.scrollLeft;
+        reviewsTrack.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', event => {
+        if (!isDragging) return;
+
+        const distance = event.clientX - dragStartX;
+        if (Math.abs(distance) > 4) {
+            didDrag = true;
         }
 
+        reviewsTrack.scrollLeft = dragStartScrollLeft - distance;
+    }, { passive: true });
+
+    window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+
+        isDragging = false;
+        reviewsTrack.classList.remove('is-dragging');
+    });
+
+    reviewsTrack.addEventListener('click', event => {
+        if (!didDrag) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        didDrag = false;
+    }, true);
+
+    const handleModeChange = () => {
         setActiveReviewDot(getActiveReviewIndex());
     };
 
@@ -222,6 +246,103 @@ function setupReviewsSlider() {
     window.addEventListener('resize', handleModeChange, { passive: true });
     handleModeChange();
 }
+
+function setupFirebaseReviews() {
+    if (!reviewForm) return;
+
+    if (!hasFirebaseConfig) {
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'Firebase chưa được cấu hình.';
+        }
+        reviewForm.querySelector('button[type="submit"]')?.setAttribute('disabled', 'disabled');
+        return;
+    }
+
+    try {
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        reviewsRef = ref(database, 'reviews');
+        const latestReviewsQuery = query(reviewsRef, orderByChild('createdAt'), limitToLast(30));
+
+        onValue(latestReviewsQuery, snapshot => {
+            const loadedReviews = [];
+
+            snapshot.forEach(childSnapshot => {
+                const review = childSnapshot.val();
+                if (!review || review.isApproved === false) return;
+
+                loadedReviews.push({
+                    id: childSnapshot.key,
+                    name: String(review.name || '').slice(0, 40),
+                    stars: normalizeStars(review.stars),
+                    text: String(review.text || '').slice(0, 260),
+                    createdAt: Number(review.createdAt || 0)
+                });
+            });
+
+            customerReviews = loadedReviews.sort((a, b) => b.createdAt - a.createdAt);
+            renderReviews();
+        }, error => {
+            if (reviewFormStatus) {
+                reviewFormStatus.textContent = 'Chưa tải được đánh giá từ Firebase. Kiểm tra Database Rules.';
+            }
+            console.error(error);
+        });
+    } catch (error) {
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'Không kết nối được Firebase.';
+        }
+        console.error(error);
+    }
+}
+
+reviewForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    if (!reviewsRef) {
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'Firebase chưa sẵn sàng, bạn thử lại sau vài giây nhé.';
+        }
+        return;
+    }
+
+    const formData = new FormData(reviewForm);
+    const name = String(formData.get('name') || '').trim().slice(0, 40);
+    const stars = normalizeStars(formData.get('stars'));
+    const text = String(formData.get('text') || '').trim().slice(0, 260);
+
+    if (!name || !text) {
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'Bạn nhập giúp AQ tên và nội dung đánh giá nhé.';
+        }
+        return;
+    }
+
+    const submitButton = reviewForm.querySelector('button[type="submit"]');
+    submitButton?.setAttribute('disabled', 'disabled');
+
+    try {
+        await push(reviewsRef, {
+            name,
+            stars,
+            text,
+            isApproved: true,
+            createdAt: serverTimestamp()
+        });
+
+        reviewForm.reset();
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'AQ đã nhận đánh giá của bạn. Cảm ơn bạn nhiều!';
+        }
+    } catch (error) {
+        if (reviewFormStatus) {
+            reviewFormStatus.textContent = 'Chưa lưu được đánh giá. Kiểm tra Firebase Realtime Database Rules.';
+        }
+        console.error(error);
+    } finally {
+        submitButton?.removeAttribute('disabled');
+    }
+});
 
 const contactForm = document.getElementById('contactForm');
 const formStatus = contactForm?.querySelector('.form-status');
@@ -260,3 +381,4 @@ if (reviewsShell) {
 
 renderReviews();
 setupReviewsSlider();
+setupFirebaseReviews();
