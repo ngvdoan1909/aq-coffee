@@ -111,25 +111,71 @@
       {
         "@context": "https://schema.org",
         "@type": "CafeOrCoffeeShop",
+        "@id": "https://aq-coffee.vercel.app/#aq-coffee",
         "name": "AQ Coffee",
-        "image": "https://aq-coffee.vercel.app/assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg",
+        "alternateName": "AQ Coffee Bắc Thăng Long",
+        "description": "AQ Coffee là quầy cà phê mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh, Hà Nội, phục vụ cà phê sáng cho công nhân, dân văn phòng và khách đi làm quanh khu vực.",
+        "image": [
+          "https://aq-coffee.vercel.app/assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg",
+          "https://aq-coffee.vercel.app/assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg",
+          "https://aq-coffee.vercel.app/assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg"
+        ],
         "logo": "https://aq-coffee.vercel.app/assets/images/logo.png",
         "telephone": "0868691616",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Đông Anh",
           "addressRegion": "Hà Nội",
-          "streetAddress": "Cổng A KCN Bắc Thăng Long"
+          "streetAddress": "Cổng A KCN Bắc Thăng Long",
+          "addressCountry": "VN"
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": 21.138,
-          "longitude": 105.778
+          "latitude": 21.1238952,
+          "longitude": 105.7765993
         },
+        "hasMap": "https://www.google.com/maps?q=21.1238952,105.7765993",
         "openingHours": "Mo-Sa 05:00-08:00",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "05:00",
+            "closes": "08:00"
+          }
+        ],
         "servesCuisine": "Coffee",
         "priceRange": "15.000đ - 20.000đ",
         "url": "https://aq-coffee.vercel.app/",
+        "areaServed": [
+          {
+            "@type": "Place",
+            "name": "KCN Bắc Thăng Long"
+          },
+          {
+            "@type": "Place",
+            "name": "Đông Anh"
+          },
+          {
+            "@type": "Place",
+            "name": "Kim Chung"
+          },
+          {
+            "@type": "Place",
+            "name": "Hải Bối"
+          },
+          {
+            "@type": "Place",
+            "name": "Võng La"
+          }
+        ],
         "sameAs": ["https://www.facebook.com/tran.quan.705128"]
       }
     </script>
@@ -150,6 +196,7 @@
         <div class="nav-links">
           <a href="#menu">Thực Đơn</a>
           <a href="#about">Giới Thiệu</a>
+          <a href="#blog">Blog</a>
           <a href="#reviews">Đánh Giá</a>
           <a href="#contact">Liên Hệ</a>
         </div>
@@ -309,6 +356,21 @@
             <li>Võng La</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section class="blog" id="blog" aria-labelledby="blog-title">
+      <div class="section-header">
+        <h2 id="blog-title">Blog AQ Coffee</h2>
+        <p>Câu chuyện cà phê sáng, cà phê mang đi và nhịp sống Bắc Thăng Long</p>
+      </div>
+
+      <div class="blog-shell">
+        <div class="blog-grid" id="blogGrid" aria-live="polite"></div>
+        <article class="blog-article" id="blogArticle" hidden></article>
+        <p class="blog-status" id="blogStatus" role="status" aria-live="polite">
+          Đang tải bài viết...
+        </p>
       </div>
     </section>
 

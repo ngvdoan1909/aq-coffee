@@ -9,7 +9,42 @@
       <image:loc>https://aq-coffee.vercel.app/assets/images/logo.png</image:loc>
       <image:title>AQ Coffee logo</image:title>
     </image:image>
-    <lastmod>2026-05-17</lastmod>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg</image:loc>
+      <image:title>AQ Coffee - cà phê mang đi tại KCN Bắc Thăng Long</image:title>
+      <image:caption>Ly cà phê mang đi của AQ Coffee phục vụ khách tại Cổng A KCN Bắc Thăng Long, Đông Anh.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg</image:loc>
+      <image:title>Quầy AQ Coffee tại Cổng A KCN Bắc Thăng Long</image:title>
+      <image:caption>Quầy cà phê sáng AQ Coffee tại khu vực Bắc Thăng Long, Đông Anh, Hà Nội.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/ca-phe-den-aq-coffee-dong-anh.jpg</image:loc>
+      <image:title>Cà phê đen AQ Coffee Đông Anh</image:title>
+      <image:caption>Cà phê đen mang đi tại AQ Coffee phục vụ khách quanh Đông Anh.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/ca-phe-sua-aq-coffee-bac-thang-long.jpg</image:loc>
+      <image:title>Cà phê sữa AQ Coffee Bắc Thăng Long</image:title>
+      <image:caption>Cà phê sữa mang đi tại AQ Coffee gần KCN Bắc Thăng Long.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg</image:loc>
+      <image:title>Cà phê muối AQ Coffee KCN Bắc Thăng Long</image:title>
+      <image:caption>Cà phê muối của AQ Coffee dành cho khách mua cà phê sáng tại KCN Bắc Thăng Long.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/coffee/bac-xiu-aq-coffee-dong-anh.jpg</image:loc>
+      <image:title>Bạc xỉu AQ Coffee Đông Anh</image:title>
+      <image:caption>Bạc xỉu mang đi tại AQ Coffee phục vụ khách quanh Đông Anh và Bắc Thăng Long.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://aq-coffee.vercel.app/assets/images/seo/aq-coffee-ca-phe-mang-di-dong-anh-og.jpg</image:loc>
+      <image:title>AQ Coffee - cà phê mang đi Đông Anh</image:title>
+      <image:caption>Ảnh chia sẻ thương hiệu AQ Coffee, quán cà phê mang đi tại Đông Anh.</image:caption>
+    </image:image>
+    <lastmod>2026-05-23</lastmod>
     <priority>1.0</priority>
   </url>
 </urlset>
