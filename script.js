@@ -96,11 +96,6 @@ let blogPosts = [];
 let reviewsRef;
 let blogPostsRef;
 let firebaseDatabase;
-const blogImageUrls = {
-    'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg', import.meta.url).href,
-    'assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg', import.meta.url).href,
-    'assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg', import.meta.url).href
-};
 const fallbackBlogPosts = [
     {
         title: 'AQ Coffee Phục Vụ Cà Phê Sáng Quanh Bắc Thăng Long Và Mê Linh',
@@ -264,7 +259,11 @@ function sanitizeBlogHTML(value) {
 function getPostImage(post) {
     const imageUrl = post.imageUrl || 'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg';
 
-    return blogImageUrls[imageUrl] || imageUrl;
+    if (imageUrl.startsWith('assets/')) {
+        return `/${imageUrl}`;
+    }
+
+    return imageUrl;
 }
 
 function renderBlogPosts() {
