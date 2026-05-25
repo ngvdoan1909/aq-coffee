@@ -390,11 +390,28 @@
       </div>
 
       <div class="blog-shell">
-        <div class="blog-grid" id="blogGrid" aria-live="polite"></div>
-        <article class="blog-article" id="blogArticle" hidden></article>
-        <p class="blog-status" id="blogStatus" role="status" aria-live="polite">
-          Đang tải bài viết...
-        </p>
+        <div class="blog-slider">
+          <button
+            class="blog-nav blog-nav-prev"
+            type="button"
+            id="blogPrev"
+            aria-label="Bài viết trước"
+          >
+            ‹
+          </button>
+          <div class="blog-viewport">
+            <div class="blog-grid" id="blogGrid" aria-live="polite"></div>
+          </div>
+          <button
+            class="blog-nav blog-nav-next"
+            type="button"
+            id="blogNext"
+            aria-label="Bài viết tiếp theo"
+          >
+            ›
+          </button>
+        </div>
+        <div class="blog-dots" id="blogDots" aria-label="Chọn bài viết"></div>
       </div>
     </section>
 
