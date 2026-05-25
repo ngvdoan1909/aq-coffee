@@ -96,23 +96,28 @@ let blogPosts = [];
 let reviewsRef;
 let blogPostsRef;
 let firebaseDatabase;
+const blogImageUrls = {
+    'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg', import.meta.url).href,
+    'assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg', import.meta.url).href,
+    'assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg': new URL('./assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg', import.meta.url).href
+};
 const fallbackBlogPosts = [
     {
-        title: 'AQ Coffee - Cà Phê Sáng Mang Đi Tại KCN Bắc Thăng Long',
+        title: 'AQ Coffee Phục Vụ Cà Phê Sáng Quanh Bắc Thăng Long Và Mê Linh',
         slug: 'aq-coffee-ca-phe-sang-mang-di-kcn-bac-thang-long',
-        metaDescription: 'AQ Coffee phục vụ cà phê sáng mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh cho công nhân, dân văn phòng từ 5h.',
-        excerpt: 'AQ Coffee là điểm ghé quen cho cà phê sáng mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh, mở từ 5h đến 8h.',
+        metaDescription: 'AQ Coffee phục vụ cà phê sáng quanh Bắc Thăng Long, Đông Anh, Mê Linh và khách đi làm qua Hà Nội; dưới 3km miễn phí ship.',
+        excerpt: 'AQ Coffee mở từ 5h đến 8h, phục vụ khách đi làm qua Bắc Thăng Long, Đông Anh, Mê Linh và tuyến lên Hà Nội.',
         readingMinutes: 4,
         imageUrl: 'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg',
         imageAlt: 'AQ Coffee - cà phê sáng mang đi tại KCN Bắc Thăng Long',
         publishedAt: 1779494400000,
         contentHtml: `
-            <p><strong>AQ Coffee</strong> phục vụ cà phê sáng mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh, Hà Nội. Quầy mở từ 5h00 đến 8h00, đúng khung giờ nhiều công nhân, dân văn phòng và người đi làm cần một ly cà phê nhanh gọn trước khi bắt đầu ngày mới.</p>
-            <p>Với mô hình quầy nhỏ, AQ Coffee tập trung vào những món dễ uống, phục vụ nhanh và hợp nhịp buổi sáng quanh khu công nghiệp. Khách có thể ghé lấy cà phê đen, cà phê sữa, cà phê muối hoặc bạc xỉu rồi tiếp tục di chuyển vào ca làm.</p>
-            <h4>Vì sao cà phê mang đi hợp với buổi sáng ở Bắc Thăng Long?</h4>
-            <p>Khu vực KCN Bắc Thăng Long có nhịp sinh hoạt rất sớm. Nhiều người cần mua đồ uống trong vài phút, không có nhiều thời gian ngồi lại. Vì vậy, một quầy cà phê mang đi gần Cổng A giúp khách tiết kiệm thời gian mà vẫn có ly cà phê đủ vị.</p>
-            <p>AQ Coffee chọn cách phục vụ gọn, rõ món và dễ gọi. Menu không quá dài, tập trung vào các lựa chọn quen thuộc để khách ghé nhanh không phải chờ lâu.</p>
-            <h4>Menu cà phê sáng tại AQ Coffee</h4>
+            <p><strong>AQ Coffee</strong> phục vụ cà phê sáng mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh, Hà Nội. Quầy mở từ 5h00 đến 8h00, đúng khung giờ công nhân, dân văn phòng, khách đi làm quanh Đông Anh, Mê Linh và những ai đi làm trên Hà Nội có tuyến đường đi qua cần một ly cà phê nhanh trước khi vào ca.</p>
+            <p>Ngoài khách ghé trực tiếp, AQ Coffee cũng nhận giao gần quanh Đông Anh và Mê Linh. Với đơn trong bán kính dưới 3km, AQ miễn phí ship. Nếu xa hơn 3km, quán chỉ phụ thêm 10.000đ tiền xăng xe để giữ chi phí nhẹ nhất cho khách quen buổi sáng.</p>
+            <h4>Khu vực AQ Coffee thường phục vụ</h4>
+            <p>Khách của AQ chủ yếu đi qua Cổng A KCN Bắc Thăng Long, Kim Chung, Hải Bối, Võng La, một phần Đông Anh, Mê Linh và các tuyến đi làm lên Hà Nội. Đây đều là các tuyến có nhiều người đi làm sớm, nên cà phê mang đi cần gọn, đúng giờ và dễ đặt.</p>
+            <p>Nếu bạn ở gần quầy, ghé lấy trực tiếp vẫn là nhanh nhất. Nếu đang chuẩn bị vào ca hoặc cần đặt cho vài người trong nhóm, gọi trước sẽ giúp AQ chuẩn bị sẵn để giao hoặc để bạn qua lấy không phải chờ lâu.</p>
+            <h4>Menu ngắn để phục vụ nhanh</h4>
             <ul>
                 <li>Cà phê đen: 15.000đ, phù hợp khách thích vị đậm và tỉnh táo.</li>
                 <li>Cà phê sữa: 15.000đ, dễ uống, cân bằng giữa vị cà phê và vị sữa.</li>
@@ -120,51 +125,54 @@ const fallbackBlogPosts = [
                 <li>Bạc xỉu: 20.000đ, hợp với khách thích vị sữa rõ hơn cà phê.</li>
             </ul>
             <p>Bạn có thể xem thêm <a href="https://aq-coffee.vercel.app/#menu">thực đơn AQ Coffee</a> trước khi ghé quầy để chọn món nhanh hơn.</p>
-            <p>Nếu bạn đang tìm cà phê sáng mang đi tại KCN Bắc Thăng Long, hãy ghé AQ Coffee từ 5h00 đến 8h00, Thứ 2 đến Thứ 7. Cần đặt trước, bạn gọi hotline <strong>0868 691 616</strong>.</p>
+            <p>Nếu bạn cần cà phê sáng quanh KCN Bắc Thăng Long, Đông Anh, Mê Linh hoặc đi làm trên Hà Nội có đường ngang qua quầy, hãy ghé AQ Coffee từ 5h00 đến 8h00, Thứ 2 đến Thứ 7. Đặt trước hoặc hỏi ship gần qua hotline <strong>0868 691 616</strong>.</p>
         `
     },
     {
-        title: 'Cà Phê Mang Đi Tại Đông Anh Cho Người Đi Làm Buổi Sáng',
+        title: 'Đặt Cà Phê Sáng Cho Nhóm Đi Làm Quanh Đông Anh, Mê Linh',
         slug: 'ca-phe-mang-di-tai-dong-anh-cho-nguoi-di-lam',
-        metaDescription: 'Ghé AQ Coffee tại Cổng A KCN Bắc Thăng Long để mua cà phê mang đi ở Đông Anh, phù hợp công nhân và dân văn phòng buổi sáng.',
-        excerpt: 'Người đi làm quanh Đông Anh có thể ghé AQ Coffee từ 5h đến 8h để mua cà phê mang đi nhanh, tiện đường và dễ chọn món.',
+        metaDescription: 'AQ Coffee nhận đặt cà phê sáng cho nhóm công nhân, văn phòng quanh Đông Anh, Mê Linh và khách đi làm qua Hà Nội.',
+        excerpt: 'Đi làm theo nhóm hoặc cùng ca sáng, bạn có thể đặt trước cà phê tại AQ Coffee khi đi qua Bắc Thăng Long.',
         readingMinutes: 4,
         imageUrl: 'assets/images/coffee/quay-aq-coffee-cong-a-kcn-bac-thang-long.jpg',
         imageAlt: 'Quầy AQ Coffee tại Cổng A KCN Bắc Thăng Long Đông Anh',
         publishedAt: 1779408000000,
         contentHtml: `
-            <p>Buổi sáng ở Đông Anh thường bắt đầu rất sớm, nhất là quanh KCN Bắc Thăng Long. Với nhiều công nhân và dân văn phòng, một ly <strong>cà phê mang đi</strong> là lựa chọn tiện nhất trước giờ vào ca hoặc trước khi đến văn phòng.</p>
-            <p>AQ Coffee nằm tại Cổng A KCN Bắc Thăng Long, phục vụ khách trong khung giờ 5h00 - 8h00 từ Thứ 2 đến Thứ 7. Đây là khoảng thời gian phù hợp với người cần mua nhanh, không muốn mất nhiều thời gian dừng lại.</p>
-            <h4>AQ Coffee phù hợp với ai?</h4>
-            <p>Quầy phục vụ chủ yếu cho công nhân trong khu công nghiệp, dân văn phòng, người đi làm sớm và khách di chuyển qua khu Kim Chung, Hải Bối, Võng La. Khách có thể ghé lấy cà phê rồi tiếp tục đi làm mà không cần đổi lộ trình quá nhiều.</p>
-            <h4>Những món dễ gọi vào buổi sáng</h4>
+            <p>Nhiều khách của AQ Coffee không chỉ mua một ly, mà đặt theo nhóm nhỏ trong cùng ca làm hoặc cùng văn phòng. Với khung giờ 5h00 - 8h00, việc đặt trước giúp mọi người nhận cà phê nhanh hơn, nhất là quanh KCN Bắc Thăng Long, Đông Anh, Mê Linh và các tuyến đi làm lên Hà Nội.</p>
+            <p>AQ Coffee phù hợp với nhóm công nhân vào ca sớm, nhân viên văn phòng cần cà phê trước giờ làm, hoặc vài anh chị đi cùng tuyến qua Cổng A KCN Bắc Thăng Long để lên Hà Nội. Chỉ cần chốt số lượng và món, AQ sẽ chuẩn bị theo giờ hẹn trong khả năng phục vụ buổi sáng.</p>
+            <h4>Đặt nhóm nên chọn món thế nào?</h4>
+            <p>Nếu trong nhóm có nhiều gu khác nhau, cách dễ nhất là chia theo nhóm vị. Người thích mạnh chọn cà phê đen, người thích cân bằng chọn cà phê sữa, người muốn đổi vị chọn cà phê muối, còn ai thích nhẹ hơn có thể chọn bạc xỉu.</p>
             <ul>
                 <li>Cà phê đen cho người thích vị mạnh, ít ngọt.</li>
                 <li>Cà phê sữa cho khách muốn vị đậm nhưng dễ uống hơn.</li>
                 <li>Cà phê muối cho người thích vị béo, thơm và lạ miệng.</li>
                 <li>Bạc xỉu cho khách thích vị sữa mềm, nhẹ cà phê.</li>
             </ul>
-            <p>Thông tin menu được cập nhật tại <a href="https://aq-coffee.vercel.app/#menu">thực đơn cà phê AQ Coffee</a>, bạn có thể xem trước để đặt món nhanh khi ghé quầy.</p>
-            <p>Nếu bạn cần cà phê mang đi tại Đông Anh, hãy ghé AQ Coffee ở Cổng A KCN Bắc Thăng Long từ 5h00 đến 8h00. Hotline đặt trước: <strong>0868 691 616</strong>.</p>
+            <h4>Chính sách giao gần của AQ Coffee</h4>
+            <p>Với đơn dưới 3km tính từ quầy, AQ Coffee miễn phí ship để hỗ trợ khách quen quanh Đông Anh và khu gần KCN Bắc Thăng Long. Với đơn trên 3km, quán chỉ lấy thêm 10.000đ tiền ship, đủ phụ xăng xe cho việc giao buổi sáng.</p>
+            <p>Thông tin menu được cập nhật tại <a href="https://aq-coffee.vercel.app/#menu">thực đơn cà phê AQ Coffee</a>, bạn có thể xem trước để đặt món nhanh hơn.</p>
+            <p>Nếu nhóm của bạn ở Đông Anh, Mê Linh, gần Bắc Thăng Long hoặc đi làm trên Hà Nội có đường qua quầy và muốn đặt cà phê sáng, gọi AQ Coffee qua hotline <strong>0868 691 616</strong>.</p>
         `
     },
     {
-        title: 'Cà Phê Muối Và Bạc Xỉu Tại AQ Coffee Bắc Thăng Long',
+        title: 'Chọn Cà Phê Muối Hay Bạc Xỉu Khi Mua Mang Đi Ở AQ Coffee',
         slug: 'ca-phe-muoi-bac-xiu-aq-coffee-bac-thang-long',
-        metaDescription: 'AQ Coffee phục vụ cà phê muối và bạc xỉu mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh, giá 20.000đ.',
-        excerpt: 'Cà phê muối và bạc xỉu là hai món dễ uống tại AQ Coffee, phù hợp khách mua cà phê sáng quanh Bắc Thăng Long.',
+        metaDescription: 'Gợi ý chọn cà phê muối hoặc bạc xỉu tại AQ Coffee khi mua cà phê mang đi quanh Bắc Thăng Long, Đông Anh, Mê Linh.',
+        excerpt: 'Cà phê muối và bạc xỉu đều dễ uống, hợp khách ghé AQ Coffee trước giờ vào ca hoặc trên đường đi làm Hà Nội.',
         readingMinutes: 4,
         imageUrl: 'assets/images/coffee/ca-phe-muoi-aq-coffee-kcn-bac-thang-long.jpg',
         imageAlt: 'Cà phê muối AQ Coffee tại KCN Bắc Thăng Long',
         publishedAt: 1779321600000,
         contentHtml: `
-            <p>Tại AQ Coffee, bên cạnh cà phê đen và cà phê sữa quen thuộc, <strong>cà phê muối</strong> và bạc xỉu là hai lựa chọn được nhiều khách buổi sáng quan tâm. Cả hai món đều phù hợp với hình thức mang đi tại Cổng A KCN Bắc Thăng Long, Đông Anh.</p>
-            <p>Khách ghé AQ Coffee thường cần một ly đồ uống nhanh trước giờ làm. Vì vậy, những món có vị dễ uống, ổn định và không mất nhiều thời gian chờ sẽ phù hợp hơn với nhịp sáng quanh khu công nghiệp.</p>
-            <h4>Cà phê muối hợp với người thích vị béo nhẹ</h4>
-            <p>Cà phê muối có vị cà phê rõ, thêm lớp vị béo và chút mặn nhẹ để cân bằng độ ngọt. Món này phù hợp với khách muốn đổi vị so với cà phê sữa truyền thống nhưng vẫn cần sự tỉnh táo của cà phê sáng.</p>
-            <h4>Bạc xỉu dễ uống cho buổi sáng</h4>
-            <p>Bạc xỉu phù hợp với khách thích vị sữa mềm, thơm và nhẹ cà phê hơn. Với nhiều người đi làm quanh Đông Anh, bạc xỉu là lựa chọn dễ uống vào sáng sớm, đặc biệt khi không muốn vị cà phê quá mạnh.</p>
-            <p>Nếu bạn muốn thử cà phê muối hoặc bạc xỉu tại Bắc Thăng Long, ghé AQ Coffee từ 5h00 đến 8h00 hoặc gọi trước qua hotline <strong>0868 691 616</strong>.</p>
+            <p>Khi mua cà phê mang đi buổi sáng, nhiều khách phân vân giữa <strong>cà phê muối</strong> và bạc xỉu. Tại AQ Coffee, hai món này đều có giá 20.000đ, phục vụ tại Cổng A KCN Bắc Thăng Long, khách quanh Đông Anh, Mê Linh và người đi làm trên Hà Nội có đường ngang qua đều có thể ghé mua.</p>
+            <h4>Khi nào nên chọn cà phê muối?</h4>
+            <p>Cà phê muối hợp với khách muốn vị cà phê rõ nhưng vẫn có độ béo, thơm và mặn nhẹ. Món này phù hợp khi bạn đã quen uống cà phê sữa nhưng muốn đổi vị, hoặc cần một ly đậm hơn bạc xỉu cho buổi sáng làm việc.</p>
+            <p>Nếu bạn làm ở KCN Bắc Thăng Long hoặc đi qua Cổng A vào đầu giờ sáng, cà phê muối là lựa chọn dễ nhớ vì vị nổi bật, uống chậm hay mang đi đều ổn.</p>
+            <h4>Khi nào nên chọn bạc xỉu?</h4>
+            <p>Bạc xỉu nhẹ hơn, vị sữa rõ hơn và dễ uống với người không thích cà phê quá mạnh. Đây là món hợp cho khách bắt đầu ngày mới nhẹ nhàng, hoặc những ai cần đồ uống thơm béo nhưng không muốn vị đắng đậm.</p>
+            <h4>Giao gần quanh Đông Anh, Mê Linh</h4>
+            <p>Nếu đặt cà phê muối hoặc bạc xỉu quanh quầy dưới 3km, AQ Coffee miễn phí ship. Với khu vực xa hơn 3km, quán chỉ phụ thêm 10.000đ tiền ship để đủ xăng xe. Bạn có thể xem thêm <a href="https://aq-coffee.vercel.app/#menu">menu AQ Coffee</a> trước khi đặt.</p>
+            <p>Muốn thử cà phê muối hoặc bạc xỉu tại Bắc Thăng Long, Đông Anh, Mê Linh hoặc ghé nhanh trên đường đi làm Hà Nội, hãy đến AQ Coffee từ 5h00 đến 8h00 hoặc gọi trước qua hotline <strong>0868 691 616</strong>.</p>
         `
     }
 ];
@@ -254,7 +262,9 @@ function sanitizeBlogHTML(value) {
 }
 
 function getPostImage(post) {
-    return post.imageUrl || 'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg';
+    const imageUrl = post.imageUrl || 'assets/images/coffee/aq-coffee-ca-phe-mang-di-kcn-bac-thang-long.jpg';
+
+    return blogImageUrls[imageUrl] || imageUrl;
 }
 
 function renderBlogPosts() {
@@ -293,8 +303,10 @@ function renderBlogPosts() {
         blogStatus.textContent = '';
     }
 
-    if (blogPosts[0]) {
-        renderBlogArticle(0, false);
+    if (blogArticle) {
+        blogArticle.hidden = true;
+        blogArticle.innerHTML = '';
+        document.getElementById('blogStructuredData')?.remove();
     }
 }
 
@@ -321,6 +333,7 @@ function renderBlogArticle(index, shouldScroll = true) {
 
     blogArticle.hidden = false;
     blogArticle.innerHTML = `
+        <button class="blog-article-close" type="button" data-blog-close>Thu gọn</button>
         <h3>${title}</h3>
         <div class="blog-article-meta">${date} · ${minutes} phút đọc</div>
         ${description ? `<p>${description}</p>` : ''}
@@ -585,6 +598,15 @@ blogGrid?.addEventListener('click', event => {
 
     event.preventDefault();
     renderBlogArticle(Number(card.dataset.blogIndex));
+});
+
+blogArticle?.addEventListener('click', event => {
+    const closeButton = event.target.closest('[data-blog-close]');
+    if (!closeButton) return;
+
+    blogArticle.hidden = true;
+    blogArticle.innerHTML = '';
+    document.getElementById('blogStructuredData')?.remove();
 });
 
 reviewForm?.addEventListener('submit', async event => {
