@@ -1181,6 +1181,253 @@ a {
     padding: 60px 6%;
 }
 
+/* Floating contact */
+.floating-contact {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.5rem);
+    bottom: clamp(1rem, 3vw, 1.5rem);
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.8rem;
+    pointer-events: none;
+}
+
+.floating-contact button,
+.floating-contact a {
+    pointer-events: auto;
+}
+
+.floating-contact-toggle,
+.floating-contact-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 16px 34px rgba(44, 33, 24, 0.22);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.floating-contact-toggle {
+    width: 62px;
+    height: 62px;
+    background: var(--brown);
+}
+
+.floating-contact-toggle svg,
+.floating-contact-action svg,
+.floating-chat-header button svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.floating-contact-toggle:hover,
+.floating-contact-toggle:focus-visible,
+.floating-contact-action:hover,
+.floating-contact-action:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px rgba(44, 33, 24, 0.28);
+}
+
+.floating-contact-toggle:focus-visible,
+.floating-contact-action:focus-visible,
+.floating-chat-header button:focus-visible,
+.floating-chat-options button:focus-visible,
+.floating-chat-links a:focus-visible {
+    outline: 3px solid rgba(193, 154, 107, 0.45);
+    outline-offset: 3px;
+}
+
+.floating-contact-actions {
+    display: grid;
+    gap: 0.65rem;
+    transform: translateY(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s var(--ease-out);
+}
+
+.floating-contact-actions .floating-contact-action {
+    pointer-events: none;
+}
+
+.floating-contact.is-open .floating-contact-actions {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.floating-contact.is-open .floating-contact-actions .floating-contact-action {
+    pointer-events: auto;
+}
+
+.floating-contact-action {
+    width: 50px;
+    height: 50px;
+    font-weight: 800;
+}
+
+.floating-contact-chat {
+    background: #2c2118;
+}
+
+.floating-contact-zalo {
+    background: #0068ff;
+    font-size: 0.92rem;
+    letter-spacing: 0;
+}
+
+.floating-contact-facebook {
+    background: #1877f2;
+    font-family: Arial, sans-serif;
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+.floating-chat-panel {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.85rem);
+    width: min(340px, calc(100vw - 2rem));
+    overflow: hidden;
+    border: 1px solid rgba(92, 64, 51, 0.14);
+    border-radius: 18px;
+    background: rgba(255, 250, 244, 0.98);
+    box-shadow: var(--shadow-lift);
+    transform: translateY(12px) scale(0.98);
+    transform-origin: bottom right;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s var(--ease-out);
+}
+
+.floating-contact.is-chat-open .floating-chat-panel {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.floating-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--brown);
+    color: white;
+}
+
+.floating-chat-header strong,
+.floating-chat-header span {
+    display: block;
+}
+
+.floating-chat-header span {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.82rem;
+}
+
+.floating-chat-header button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: white;
+    cursor: pointer;
+}
+
+.floating-chat-body {
+    padding: 1rem;
+}
+
+.floating-chat-message,
+.floating-chat-answer {
+    border-radius: 14px;
+    padding: 0.85rem 0.95rem;
+    font-size: 0.94rem;
+}
+
+.floating-chat-message {
+    background: white;
+    color: rgba(44, 33, 24, 0.82);
+}
+
+.floating-chat-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 0.8rem 0;
+}
+
+.floating-chat-options button,
+.floating-chat-links a {
+    border: 1px solid rgba(92, 64, 51, 0.16);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--brown);
+    cursor: pointer;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s var(--ease-out);
+}
+
+.floating-chat-options button {
+    min-height: 42px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.88rem;
+}
+
+.floating-chat-options button:hover,
+.floating-chat-links a:hover {
+    border-color: rgba(92, 64, 51, 0.36);
+    background: #f8f1e9;
+    transform: translateY(-1px);
+}
+
+.floating-chat-answer {
+    min-height: 4.4rem;
+    background: rgba(193, 154, 107, 0.16);
+    color: var(--dark);
+    font-weight: 600;
+    white-space: pre-line;
+}
+
+.floating-chat-answer a {
+    color: #0068ff;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.floating-chat-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+    margin-top: 0.8rem;
+}
+
+.floating-chat-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.86rem;
+}
+
 .reveal {
     opacity: 0;
     transform: translateY(34px);
@@ -1369,6 +1616,22 @@ a {
 
     .contact {
         padding-bottom: 4rem;
+    }
+
+    .floating-contact {
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    .floating-contact-toggle {
+        width: 58px;
+        height: 58px;
+    }
+
+    .floating-chat-panel {
+        width: calc(100vw - 2rem);
+        max-height: calc(100svh - 7rem);
+        overflow-y: auto;
     }
 
     .reviews-track {
