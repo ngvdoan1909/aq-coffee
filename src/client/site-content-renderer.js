@@ -1,6 +1,6 @@
 import { siteContentPayload } from '../data/site-content.js';
 import { decodeJsonPayload } from '../utils/encoding.js';
-import { escapeHTML, setMetaContent } from '../utils/dom.js';
+import { escapeHTML, sanitizeRichHTML, setMetaContent } from '../utils/dom.js';
 
 const defaultSiteContent = decodeJsonPayload(siteContentPayload);
 
@@ -8,6 +8,25 @@ function applyText(selector, value) {
     const element = document.querySelector(selector);
     if (element && value !== undefined) {
         element.textContent = value;
+    }
+}
+
+function applyRichHTML(selector, value) {
+    const element = document.querySelector(selector);
+    if (element && value !== undefined) {
+        const html = sanitizeRichHTML(value);
+        const hasBlockTags = /<\/?(p|h[1-6]|ul|ol|li|blockquote|table|figure|div)\b/i.test(html);
+
+        if (element.tagName === 'P' && hasBlockTags) {
+            const replacement = document.createElement('div');
+            [...element.attributes].forEach(attribute => replacement.setAttribute(attribute.name, attribute.value));
+            replacement.classList.add('rich-text');
+            replacement.innerHTML = html;
+            element.replaceWith(replacement);
+            return;
+        }
+
+        element.innerHTML = html;
     }
 }
 
@@ -58,14 +77,14 @@ function renderPublicSiteContent(content) {
     }
 
     applyText('.hero-title', hero.title);
-    applyText('.hero-subtitle', hero.subtitle);
+    applyRichHTML('.hero-subtitle', hero.subtitle);
     applyText('.hero-buttons .btn-primary', hero.ctaLabel);
     const heroButton = document.querySelector('.hero-buttons .btn-primary');
     if (heroButton && hero.ctaTarget) heroButton.dataset.scrollTarget = hero.ctaTarget;
     applyImage('.hero-cup', hero.imageUrl, hero.imageAlt);
 
     applyText('#menu .section-header h2', menu.title);
-    applyText('#menu .section-header p', menu.subtitle);
+    applyRichHTML('#menu .section-header p', menu.subtitle);
     const menuGrid = document.querySelector('.menu-grid');
     if (menuGrid && Array.isArray(menu.items)) {
         menuGrid.innerHTML = menu.items.map(item => `
@@ -82,11 +101,11 @@ function renderPublicSiteContent(content) {
     }
 
     applyText('#about .about-text h2', about.title);
-    applyText('#about .about-text p', about.text);
+    applyRichHTML('#about .about-text p', about.text);
     applyImage('#about .about-image img', about.imageUrl, about.imageAlt);
 
     applyText('#local-title', localSeo.title);
-    applyText('.local-seo-copy p', localSeo.text);
+    applyRichHTML('.local-seo-copy p', localSeo.text);
     applyText('.local-seo-areas h3', localSeo.areasTitle);
     const areasList = document.querySelector('.local-seo-areas ul');
     if (areasList && Array.isArray(localSeo.areas)) {
@@ -94,13 +113,13 @@ function renderPublicSiteContent(content) {
     }
 
     applyText('#search-intents-title', searchIntents.title);
-    applyText('.search-intents .section-header p', searchIntents.subtitle);
+    applyRichHTML('.search-intents .section-header p', searchIntents.subtitle);
     const intentGrid = document.querySelector('.search-intent-grid');
     if (intentGrid && Array.isArray(searchIntents.cards)) {
         intentGrid.innerHTML = searchIntents.cards.map(card => `
             <article class="search-intent-card">
                 <h3>${escapeHTML(card.title || '')}</h3>
-                <p>${escapeHTML(card.text || '')}</p>
+                <div class="rich-text">${sanitizeRichHTML(card.text || '')}</div>
             </article>
         `).join('');
     }
@@ -109,19 +128,19 @@ function renderPublicSiteContent(content) {
         faq.innerHTML = searchIntents.faqs.map(item => `
             <details>
                 <summary>${escapeHTML(item.question || '')}</summary>
-                <p>${escapeHTML(item.answer || '')}</p>
+                <div class="rich-text">${sanitizeRichHTML(item.answer || '')}</div>
             </details>
         `).join('');
     }
 
     applyText('#blog-title', blogSection.title);
-    applyText('#blog .section-header p', blogSection.subtitle);
+    applyRichHTML('#blog .section-header p', blogSection.subtitle);
     applyText('#reviews-title', reviewsSection.title);
-    applyText('#reviews .section-header p', reviewsSection.subtitle);
+    applyRichHTML('#reviews .section-header p', reviewsSection.subtitle);
     applyText('.review-form h3', reviewsSection.formTitle);
 
     applyText('#contact .section-header h2', contact.title);
-    applyText('#contact .section-header p', contact.subtitle);
+    applyRichHTML('#contact .section-header p', contact.subtitle);
     applyText('.contact-info h3', contact.infoTitle);
     const contactInfo = document.querySelector('.contact-info');
     if (contactInfo) {

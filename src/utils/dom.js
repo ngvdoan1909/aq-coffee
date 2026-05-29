@@ -7,6 +7,25 @@ export function escapeHTML(value) {
         .replaceAll("'", '&#039;');
 }
 
+export function sanitizeRichHTML(value) {
+    const template = document.createElement('template');
+    template.innerHTML = String(value || '');
+
+    template.content.querySelectorAll('script, style, iframe, object, embed').forEach(element => element.remove());
+    template.content.querySelectorAll('*').forEach(element => {
+        [...element.attributes].forEach(attribute => {
+            const name = attribute.name.toLowerCase();
+            const rawValue = attribute.value.trim().toLowerCase();
+
+            if (name.startsWith('on') || rawValue.startsWith('javascript:')) {
+                element.removeAttribute(attribute.name);
+            }
+        });
+    });
+
+    return template.innerHTML;
+}
+
 export function setMetaContent(selector, content) {
     const meta = document.head.querySelector(selector);
     if (meta) {

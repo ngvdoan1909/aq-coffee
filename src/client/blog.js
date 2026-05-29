@@ -1,6 +1,6 @@
 import { blogPostsPayload } from '../data/blog-data.js';
 import { decodeJsonPayload } from '../utils/encoding.js';
-import { escapeHTML, setMetaContent } from '../utils/dom.js';
+import { escapeHTML, sanitizeRichHTML, setMetaContent } from '../utils/dom.js';
 
 const staticBlogPosts = decodeJsonPayload(blogPostsPayload);
 let blogPosts = staticBlogPosts;
@@ -43,7 +43,7 @@ function renderBlogRouteIfNeeded() {
             <div class="blog-page-meta">${new Intl.DateTimeFormat('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(post.publishedAt))} · ${Number(post.readingMinutes || 4)} phút đọc</div>
             <h1>${escapeRouteHTML(post.title)}</h1>
             <p class="blog-page-excerpt">${escapeRouteHTML(post.excerpt)}</p>
-            <div class="blog-page-content">${post.contentHtml}</div>
+            <div class="blog-page-content">${sanitizeRichHTML(post.contentHtml)}</div>
           </article>
         </main>
     `;

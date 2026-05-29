@@ -214,3 +214,31 @@
     margin-top: 0.5rem;
     color: rgba(44, 33, 24, 0.68);
 }
+
+.section-header .rich-text {
+    margin-top: 0.5rem;
+    color: rgba(44, 33, 24, 0.68);
+}
+
+.rich-text p + p,
+.rich-text ul,
+.rich-text ol,
+.rich-text blockquote {
+    margin-top: 0.85rem;
+}
+
+.rich-text ul,
+.rich-text ol {
+    padding-left: 1.25rem;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+    margin: 1rem 0 0.5rem;
+    color: var(--brown);
+    line-height: 1.2;
+}

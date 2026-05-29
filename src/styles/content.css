@@ -133,6 +133,13 @@
     color: rgba(44, 33, 24, 0.82);
 }
 
+.about-text .rich-text,
+.local-seo-copy .rich-text,
+.search-intent-card .rich-text,
+.seo-faq .rich-text {
+    color: rgba(44, 33, 24, 0.82);
+}
+
 .about-image img {
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -235,13 +242,16 @@
 }
 
 .search-intent-card p,
-.seo-faq p {
+.search-intent-card .rich-text,
+.seo-faq p,
+.seo-faq .rich-text {
     color: rgba(44, 33, 24, 0.82);
     font-size: 0.98rem;
     line-height: 1.75;
 }
 
-.search-intent-card p + p {
+.search-intent-card p + p,
+.search-intent-card .rich-text p + p {
     margin-top: 0.85rem;
 }
 
@@ -265,6 +275,7 @@
     font-weight: 700;
 }
 
-.seo-faq p {
+.seo-faq p,
+.seo-faq .rich-text {
     padding: 0 1.1rem 1rem;
 }
